@@ -1,7 +1,6 @@
 package be.vdab.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
@@ -16,20 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/index.htm")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String VIEW = "/WEB-INF/JSP/index.jsp";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		out.println("<! doctype html>");
-		out.println("<head><title>Pizza Luigi</title>");
-		out.println("</head>");
-		out.println("<body><h1>");
 		int uur = LocalDateTime.now().getHour();
-		out.println(uur>=6 && uur<12?"Goedemorgen":uur>=12 && uur<18?"Goedemiddag":"Goedeavond");
-		out.println("</h1></body></html>");
+		request.setAttribute("begroeting", uur>=6 && uur<12?"Goeiemorgen":uur>=12 && uur<18?"Goeiemiddag":"Goeieavond");
+		request.getRequestDispatcher(VIEW).forward(request, response);
+
 	}
 
 }
