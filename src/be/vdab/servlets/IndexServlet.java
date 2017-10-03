@@ -28,7 +28,7 @@ public class IndexServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body><h1>");
 		int uur = LocalDateTime.now().getHour();
-		out.println(uur>=6 && uur<=12?"Goedemorgen":uur>12 && uur<18?"Goedemiddag":"Goedenavond");
+		out.println(uur>=6 && uur<12?"Goedemorgen":uur>=12 && uur<18?"Goedemiddag":"Goedeavond");
 		out.println("</h1></body></html>");
 	}
 
