@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
+	<c:import url="/WEB-INF/JSP/menu.jsp"/>
 	<h1>Pizza Luigi</h1>
 	<img alt="pizza" src="images/pizza.jpg" class="fullwidth">
 	<h2>${begroeting}</h2>
