@@ -4,22 +4,25 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<title>Pizza Luigi</title>
-<link rel="stylesheet" href="styles/default.css">
-<link rel="icon" href="images/favicon.ico?">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<c:import url="/WEB-INF/JSP/head.jsp">
+	<c:param name="title" value="Pizza Luigi"></c:param>
+</c:import>
 </head>
 <body>
-	<c:import url="/WEB-INF/JSP/menu.jsp"/>
+	<c:import url="/WEB-INF/JSP/menu.jsp" />
 	<h1>Pizza Luigi</h1>
 	<img alt="pizza" src="images/pizza.jpg" class="fullwidth">
 	<h2>${begroeting}</h2>
 	<h2>De zaakvoerder</h2>
 	<dl>
-		<dt>Naam</dt><dd>${zaakvoerder.naam}</dd>
-		<dt>Aantal kinderen</dt><dd>${zaakvoerder.aantalKinderen}</dd>
-		<dt>Gehuwd</dt><dd>${zaakvoerder.gehuwd?"ja":"nee"}</dd>
-		<dt>Adres</dt><dd>${zaakvoerder.adres.adres}</dd>
+		<dt>Naam</dt>
+		<dd>${zaakvoerder.naam}</dd>
+		<dt>Aantal kinderen</dt>
+		<dd>${zaakvoerder.aantalKinderen}</dd>
+		<dt>Gehuwd</dt>
+		<dd>${zaakvoerder.gehuwd?"ja":"nee"}</dd>
+		<dt>Adres</dt>
+		<dd>${zaakvoerder.adres.adres}</dd>
 	</dl>
 </body>
 </html>

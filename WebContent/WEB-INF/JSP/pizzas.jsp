@@ -3,10 +3,9 @@
 <!doctype html>
 <html>
 <head>
-<title>Pizza's</title>
-<link rel="icon" href="images/favicon.ico">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="styles/default.css">
+<c:import url="/WEB-INF/JSP/head.jsp">
+	<c:param name="title" value="Pizza's"></c:param>
+</c:import>
 </head>
 <body>
 	<c:import url="/WEB-INF/JSP/menu.jsp" />
