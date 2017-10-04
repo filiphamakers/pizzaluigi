@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import be.vdab.entities.Begroeting;
+
 /**
  * Servlet implementation class IndexServlet
  */
@@ -18,14 +20,13 @@ public class IndexServlet extends HttpServlet {
 	private static final String VIEW = "/WEB-INF/JSP/index.jsp";
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int uur = LocalDateTime.now().getHour();
-		request.setAttribute("begroeting", uur>=6 && uur<12?"Goeiemorgen":uur>=12 && uur<18?"Goeiemiddag":"Goeieavond");
+		request.setAttribute("begroeting", new Begroeting());
 		request.getRequestDispatcher(VIEW).forward(request, response);
-
 	}
-
 }
