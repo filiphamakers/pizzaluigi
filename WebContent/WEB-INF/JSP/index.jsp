@@ -25,8 +25,9 @@
 		<dt>Adres</dt>
 		<dd>${zaakvoerder.adres.adres}</dd>
 	</dl>
+	<div>Deze pagina werd ${aantalKeerBekeken} keer bekeken</div>
 	<div>
-		<a href="mailto:${emailAdresWebMaster}">${emailAdresWebMaster}</a>
+		<a href="mailto:${initParam.emailAdresWebMaster}">${initParam.emailAdresWebMaster}</a>
 	</div>
 </body>
 </html>
