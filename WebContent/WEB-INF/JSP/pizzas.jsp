@@ -11,11 +11,11 @@
 	<c:import url="/WEB-INF/JSP/menu.jsp" />
 	<h1>Pizza's</h1>
 	<ul class="zebra">
-		<c:forEach var="entry" items="${pizzas}">
-			<li>${entry.key}: ${entry.value.naam} &euro;${entry.value.prijs}<c:if
-					test="${entry.value.pikant}"> pikant</c:if> <c:url
+		<c:forEach var="pizza" items="${pizzas}">
+			<li>${pizza.id}:<c:out value="${pizza.naam}" />
+				&euro;${pizza.prijs} ${pizza.pikant?"pikant":"niet pikant"} <c:url
 					value="/pizzas/detail.htm" var="detailURL">
-					<c:param name="id" value="${entry.key}" />
+					<c:param name="id" value="${pizza.id}" />
 				</c:url> <a href="${detailURL}">Detail</a>
 			</li>
 		</c:forEach>
