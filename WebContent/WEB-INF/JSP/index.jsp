@@ -11,7 +11,8 @@
 <body>
 	<c:import url="/WEB-INF/JSP/menu.jsp" />
 	<h1>Pizza Luigi</h1>
-	<img alt="pizza" src="<c:url value="/images/pizza.jpg"/>" class="fullwidth">
+	<img alt="pizza" src="<c:url value="/images/pizza.jpg"/>"
+		class="fullwidth">
 	<h2>${begroeting}</h2>
 	<h2>De zaakvoerder</h2>
 	<dl>
@@ -24,5 +25,8 @@
 		<dt>Adres</dt>
 		<dd>${zaakvoerder.adres.adres}</dd>
 	</dl>
+	<div>
+		<a href="mailto:${emailAdresWebMaster}">${emailAdresWebMaster}</a>
+	</div>
 </body>
 </html>
