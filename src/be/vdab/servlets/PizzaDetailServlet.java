@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.vdab.repositories.PizzaRepository;
+import be.vdab.utils.StringUtils;
 
-/**
- * Servlet implementation class PizzaDetailServlet
- */
 @WebServlet(urlPatterns = "/pizzas/detail.htm")
 public class PizzaDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +21,12 @@ public class PizzaDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
-		
+		if (StringUtils.isLong(id)) {
+			pizzaRepository.read(Long.parseLong(id)).ifPresent(pizza -> request.setAttribute("pizza", pizza));
+		} else
+			request.setAttribute("fout", "id niet correct");
+
+		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
 
 }
