@@ -13,7 +13,7 @@
 					toevoegen</a></li>
 			<li><a href="<c:url value="/identificatie.htm"/>">Identificatie</a></li>
 			<li><a href="<c:url value="/headers.htm"/>">Headers</a></li>
-			<li><a href="<c:url value="/pizzas/bestellen"/>">Bestellen</a></li>
+			<li><a href="<c:url value="/pizzas/bestellen.htm"/>">Bestellen</a></li>
 		</ul>
 	</nav>
 </header>
