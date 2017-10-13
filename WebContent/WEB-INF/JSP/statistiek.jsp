@@ -15,6 +15,8 @@
 		<dd>${indexRequests}</dd>
 		<dt>Pizza's</dt>
 		<dd>${pizzasRequests}<dd>
+		<dt>Aantal winkelmandjes</dt>
+		<dd>${aantalMandjes}</dd>
 	</dl>
 </body>
 </html>
