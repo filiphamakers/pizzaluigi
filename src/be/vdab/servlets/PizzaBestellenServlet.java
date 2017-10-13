@@ -6,12 +6,14 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import be.vdab.repositories.PizzaRepository;
 
@@ -20,7 +22,12 @@ public class PizzaBestellenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/pizzabestellen.jsp";
 	private static final String MANDJE = "mandje";
-	private final PizzaRepository pizzaRepository = new PizzaRepository();
+	private final transient PizzaRepository pizzaRepository = new PizzaRepository();
+
+	@Resource(name = PizzaRepository.JNDI_NAME)
+	void setDataSource(DataSource datasource) {
+		pizzaRepository.setDataSource(datasource);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,8 +41,7 @@ public class PizzaBestellenServlet extends HttpServlet {
 				request.setAttribute("pizzasInMandje",
 						mandje.stream().map(id -> pizzaRepository.read(id))
 								.filter(optionalPizza -> optionalPizza.isPresent())
-								.map(optionalPizza -> optionalPizza.get())
-								.collect(Collectors.toList()));
+								.map(optionalPizza -> optionalPizza.get()).collect(Collectors.toList()));
 
 			}
 		}
@@ -52,9 +58,7 @@ public class PizzaBestellenServlet extends HttpServlet {
 			if (mandje == null) {
 				mandje = new LinkedHashSet<>();
 			}
-			mandje.addAll(
-					Arrays.stream(request.getParameterValues("id"))
-					.map(id -> Long.parseLong(id))
+			mandje.addAll(Arrays.stream(request.getParameterValues("id")).map(id -> Long.parseLong(id))
 					.collect(Collectors.toSet()));
 			session.setAttribute(MANDJE, mandje);
 		}

@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import be.vdab.entities.Pizza;
 import be.vdab.repositories.PizzaRepository;
@@ -19,10 +21,15 @@ import be.vdab.repositories.PizzaRepository;
 @WebServlet(urlPatterns = "/pizzas.htm")
 public class PizzasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final PizzaRepository pizzaRepository = new PizzaRepository();
+	private final transient PizzaRepository pizzaRepository = new PizzaRepository();
 	private String pizzaFotosPad;
 	private static final String VIEW = "/WEB-INF/JSP/pizzas.jsp";
 	private static final String PIZZAS_REQUESTS = "pizzasRequests";
+
+	@Resource(name = PizzaRepository.JNDI_NAME)
+	void setDataSource(DataSource datasource) {
+		pizzaRepository.setDataSource(datasource);
+	}
 
 	@Override
 	public void init() throws ServletException {
@@ -36,10 +43,9 @@ public class PizzasServlet extends HttpServlet {
 		((AtomicInteger) this.getServletContext().getAttribute(PIZZAS_REQUESTS)).incrementAndGet();
 		List<Pizza> pizzas = pizzaRepository.findAll();
 		request.setAttribute("pizzas", pizzas);
-		request.setAttribute("pizzaIdsMetFoto",pizzas.stream()
-				.filter(pizza -> Files.exists(Paths.get(pizzaFotosPad,pizza.getId()+"jpeg")))
-				.map(pizza -> pizza.getId())
-				.collect(Collectors.toList()));
+		request.setAttribute("pizzaIdsMetFoto",
+				pizzas.stream().filter(pizza -> Files.exists(Paths.get(pizzaFotosPad, pizza.getId() + "jpeg")))
+						.map(pizza -> pizza.getId()).collect(Collectors.toList()));
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
 

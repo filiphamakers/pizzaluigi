@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.sql.DataSource;
 
 import be.vdab.entities.Pizza;
 import be.vdab.repositories.PizzaRepository;
@@ -23,7 +25,12 @@ public class PizzaToevoegenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/pizzatoevoegen.jsp";
 	private static final String REDIRECT_URL = "/pizzas.htm";
-	private final PizzaRepository pizzaRepository = new PizzaRepository();
+	private final transient PizzaRepository pizzaRepository = new PizzaRepository();
+
+	@Resource(name = PizzaRepository.JNDI_NAME)
+	void setDataSource(DataSource datasource) {
+		pizzaRepository.setDataSource(datasource);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -58,14 +65,13 @@ public class PizzaToevoegenServlet extends HttpServlet {
 			boolean pikant = "pikant".equals(request.getParameter("pikant"));
 			Pizza pizza = new Pizza(naam, prijs, pikant);
 			pizzaRepository.create(pizza);
-			if(fotoIsOpgeladen) {
-//				System.out.println("foto is opgeladen");
-				String pizzaFotosPad = 
-						this.getServletContext().getRealPath("/pizzafotos");
+			if (fotoIsOpgeladen) {
+				// System.out.println("foto is opgeladen");
+				String pizzaFotosPad = this.getServletContext().getRealPath("/pizzafotos");
 				fotoPart.write(pizzaFotosPad + '/' + pizza.getId() + ".jpeg");
 				System.out.println(pizzaFotosPad);
 			}
-//			response.sendRedirect(request.getContextPath() + REDIRECT_URL);
+			// response.sendRedirect(request.getContextPath() + REDIRECT_URL);
 			response.sendRedirect(response.encodeRedirectUrl(request.getContextPath() + REDIRECT_URL));
 		} else {
 			request.setAttribute("fouten", fouten);
