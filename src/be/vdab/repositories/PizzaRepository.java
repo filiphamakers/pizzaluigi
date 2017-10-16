@@ -36,6 +36,7 @@ public class PizzaRepository extends AbstractRepository {
 					pizzas.add(resultSetRijNaarPizza(result));
 				}
 			connection.commit();
+			return pizzas;
 			} 
 		} catch (SQLException ex) {
 			throw new RepositoryException(ex);

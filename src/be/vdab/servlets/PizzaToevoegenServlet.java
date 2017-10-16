@@ -72,7 +72,7 @@ public class PizzaToevoegenServlet extends HttpServlet {
 				System.out.println(pizzaFotosPad);
 			}
 			// response.sendRedirect(request.getContextPath() + REDIRECT_URL);
-			response.sendRedirect(response.encodeRedirectUrl(request.getContextPath() + REDIRECT_URL));
+			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + REDIRECT_URL));
 		} else {
 			request.setAttribute("fouten", fouten);
 			request.getRequestDispatcher(VIEW).forward(request, response);
