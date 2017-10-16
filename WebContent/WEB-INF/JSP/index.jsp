@@ -1,6 +1,6 @@
 <%-- Welkompagina --%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="false"%>
-<%-- <%@taglib prefix="vdab" uri="http://vdab.be/tags" %> --%>
+<%@taglib prefix="vdab" uri="http://vdab.be/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -11,8 +11,7 @@
 </c:import>
 </head>
 <body>
-	<c:import url="/WEB-INF/JSP/menu.jsp" />
-<%-- 	<vdab:menu/> --%>
+	<vdab:menu/>
 	<h1>Pizza Luigi</h1>
 	<img alt="pizza" src="<c:url value="/images/pizza.jpg"/>"
 		class="fullwidth">
