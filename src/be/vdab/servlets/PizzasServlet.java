@@ -35,16 +35,18 @@ public class PizzasServlet extends HttpServlet {
 	public void init() throws ServletException {
 		this.getServletContext().setAttribute(PIZZAS_REQUESTS, new AtomicInteger());
 		pizzaFotosPad = this.getServletContext().getRealPath("/pizzafotos");
+		System.out.println(pizzaFotosPad);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println(pizzaFotosPad);
 		((AtomicInteger) this.getServletContext().getAttribute(PIZZAS_REQUESTS)).incrementAndGet();
 		List<Pizza> pizzas = pizzaRepository.findAll();
 		request.setAttribute("pizzas", pizzas);
 		request.setAttribute("pizzaIdsMetFoto",
-				pizzas.stream().filter(pizza -> Files.exists(Paths.get(pizzaFotosPad, pizza.getId() + "jpeg")))
+				pizzas.stream().filter(pizza -> Files.exists(Paths.get(pizzaFotosPad, pizza.getId() + ".jpeg")))
 						.map(pizza -> pizza.getId()).collect(Collectors.toList()));
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
