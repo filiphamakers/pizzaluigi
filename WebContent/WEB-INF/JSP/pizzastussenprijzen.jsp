@@ -4,9 +4,7 @@
 <!doctype html>
 <html>
 <head>
-<c:import url="/WEB-INF/JSP/head.jsp">
-	<c:param name="title" value="Pizza's tussen prijzen" />
-</c:import>
+<vdab:head title="Pizza's tussen prijzen"/>
 </head>
 <body>
 	<vdab:menu/>

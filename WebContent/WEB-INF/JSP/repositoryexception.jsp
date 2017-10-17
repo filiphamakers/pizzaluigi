@@ -3,10 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
-<c:import url="/WEB-INF/JSP/head.jsp">
-	<c:param name="title" value="Problemen bij ophalen data" />
-</c:import>
-<title></title>
+<head>
+<vdab:head title="Problemen bij ophalen data"/>
 </head>
 <body>
 	<vdab:menu />
