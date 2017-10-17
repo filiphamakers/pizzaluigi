@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import be.vdab.entities.Pizza;
 
 public class PizzaRepository extends AbstractRepository {
+	private final static Logger LOGGER = Logger.getLogger(PizzaRepository.class.getName());
+	//SQL statements
 	private static final String BEGIN_SELECT = 
 			"select id, naam, prijs, pikant from pizzas";
 	private static final String FIND_ALL = 
@@ -39,6 +42,7 @@ public class PizzaRepository extends AbstractRepository {
 			return pizzas;
 			} 
 		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, "Probleem met database pizzaluigi", ex);
 			throw new RepositoryException(ex);
 		}
 	}
@@ -67,6 +71,7 @@ public class PizzaRepository extends AbstractRepository {
 			connection.commit();
 			return pizza;
 		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, "Probleem met database pizzaluigi", ex);
 			throw new RepositoryException(ex);
 		}
 	}
@@ -87,6 +92,7 @@ public class PizzaRepository extends AbstractRepository {
 			connection.commit();
 			return Collections.unmodifiableList(pizzas);
 		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, "Probleem met database pizzaluigi", ex);
 			throw new RepositoryException(ex);
 		}
 	}
@@ -111,25 +117,23 @@ public class PizzaRepository extends AbstractRepository {
 //	}
 	
 	public void create(Pizza pizza) {
-	    try (Connection connection = dataSource.getConnection();
-	         PreparedStatement statement = connection.prepareStatement(
-	         CREATE, Statement.RETURN_GENERATED_KEYS)) { 
-	      connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-	      connection.setAutoCommit(false); 
-	      statement.setString(1, pizza.getNaam());
-	      statement.setBigDecimal(2, pizza.getPrijs());
-	      statement.setBoolean(3, pizza.isPikant());
-	      statement.executeUpdate();
-	      try (ResultSet resultSet = statement.getGeneratedKeys()) {
-	        resultSet.next();
-	        pizza.setId(resultSet.getLong(1)); 
-	      }
-	      connection.commit();
-	    }
-	    catch (SQLException ex) {
-	      throw new RepositoryException(ex);
-	    }
+		try (Connection connection = dataSource.getConnection(); 
+				PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)){
+			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+			connection.setAutoCommit(false);
+			statement.setString(1, pizza.getNaam());
+			statement.setBigDecimal(2, pizza.getPrijs());
+			statement.setBoolean(3, pizza.isPikant());
+			statement.executeUpdate();
+			try(ResultSet result = statement.getGeneratedKeys()){
+				result.next();
+				pizza.setId(result.getLong(1));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, "Probleem met database pizzaluigi", ex);
+			throw new RepositoryException(ex);
+		}
 	}
-	
 	
 }

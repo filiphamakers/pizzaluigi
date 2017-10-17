@@ -20,12 +20,19 @@ public class IdentificatieServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			String gebruikersnaam = (String) session.getAttribute("gebruikersnaam");
 			if (gebruikersnaam != null) {
 				request.setAttribute("gebruikersnaam", gebruikersnaam);
 			}
+			String locale = request.getParameter("locale");
+			if (locale != null) {
+				System.out.println("hier zit ik!");
+				request.getSession().setAttribute("locale", locale);
+			}
+			
 		}
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}

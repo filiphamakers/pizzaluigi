@@ -1,6 +1,8 @@
 <%-- Welkompagina --%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="false"%>
+<%@taglib prefix="vdab" uri="http://vdab.be/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -9,7 +11,7 @@
 </c:import>
 </head>
 <body>
-	<c:import url="/WEB-INF/JSP/menu.jsp" />
+	<vdab:menu/>
 	<h1>Pizza Luigi</h1>
 	<img alt="pizza" src="<c:url value="/images/pizza.jpg"/>"
 		class="fullwidth">
@@ -29,5 +31,14 @@
 	<div>
 		<a href="mailto:${initParam.emailAdresWebMaster}">${initParam.emailAdresWebMaster}</a>
 	</div>
+	<fmt:parseDate type="date" pattern="yyyy-MM-dd" var="nuAlsDate" value="${nu}" />
+	<div>
+		Vandaag:
+		<fmt:formatDate type="date" dateStyle="long" value="${nuAlsDate}" />
+	</div>
+	<dl>
+		<dt>Aantal pizza's verkocht</dt>
+		<dd><fmt:formatNumber groupingUsed="false" value="${aantalPizzasVerkocht}"/></dd>
+	</dl>
 </body>
 </html>
