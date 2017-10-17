@@ -36,6 +36,7 @@ public class PizzaRepository extends AbstractRepository {
 					pizzas.add(resultSetRijNaarPizza(result));
 				}
 			connection.commit();
+			return pizzas;
 			} 
 		} catch (SQLException ex) {
 			throw new RepositoryException(ex);
@@ -90,22 +91,45 @@ public class PizzaRepository extends AbstractRepository {
 		}
 	}
 
+//	public void create(Pizza pizza) {
+//		try (Connection connection = dataSource.getConnection(); 
+//				PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)){
+//			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+//			connection.setAutoCommit(false);
+//			statement.setString(1, pizza.getNaam());
+//			statement.setBigDecimal(2, pizza.getPrijs());
+//			statement.setBoolean(3, pizza.isPikant());
+//			statement.executeUpdate();
+//			try(ResultSet result = statement.getGeneratedKeys()){
+//				result.next();
+//				pizza.setId(result.getLong(1));
+//			}
+//			connection.commit();
+//		} catch (SQLException ex) {
+//			throw new RepositoryException(ex);
+//		}
+//	}
+	
 	public void create(Pizza pizza) {
-		try (Connection connection = dataSource.getConnection(); 
-				PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)){
-			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-			connection.setAutoCommit(false);
-			statement.setString(1, pizza.getNaam());
-			statement.setBigDecimal(2, pizza.getPrijs());
-			statement.setBoolean(3, pizza.isPikant());
-			statement.executeUpdate();
-			try(ResultSet result = statement.getGeneratedKeys()){
-				result.next();
-				pizza.setId(result.getLong(1));
-			}
-			connection.commit();
-		} catch (SQLException ex) {
-			throw new RepositoryException(ex);
-		}
+	    try (Connection connection = dataSource.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(
+	         CREATE, Statement.RETURN_GENERATED_KEYS)) { 
+	      connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+	      connection.setAutoCommit(false); 
+	      statement.setString(1, pizza.getNaam());
+	      statement.setBigDecimal(2, pizza.getPrijs());
+	      statement.setBoolean(3, pizza.isPikant());
+	      statement.executeUpdate();
+	      try (ResultSet resultSet = statement.getGeneratedKeys()) {
+	        resultSet.next();
+	        pizza.setId(resultSet.getLong(1)); 
+	      }
+	      connection.commit();
+	    }
+	    catch (SQLException ex) {
+	      throw new RepositoryException(ex);
+	    }
 	}
+	
+	
 }

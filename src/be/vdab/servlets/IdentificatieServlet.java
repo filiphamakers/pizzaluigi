@@ -35,7 +35,7 @@ public class IdentificatieServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.setAttribute("gebruikersnaam", request.getParameter("gebruikersnaam"));
-		response.sendRedirect(response.encodeRedirectUrl(request.getRequestURI()));
+		response.sendRedirect(response.encodeRedirectURL(request.getRequestURI()));
 	}
 
 }

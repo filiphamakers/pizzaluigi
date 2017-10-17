@@ -66,13 +66,12 @@ public class PizzaToevoegenServlet extends HttpServlet {
 			Pizza pizza = new Pizza(naam, prijs, pikant);
 			pizzaRepository.create(pizza);
 			if (fotoIsOpgeladen) {
-				// System.out.println("foto is opgeladen");
+				System.out.println("foto is opgeladen");
 				String pizzaFotosPad = this.getServletContext().getRealPath("/pizzafotos");
 				fotoPart.write(pizzaFotosPad + '/' + pizza.getId() + ".jpeg");
 				System.out.println(pizzaFotosPad);
 			}
-			// response.sendRedirect(request.getContextPath() + REDIRECT_URL);
-			response.sendRedirect(response.encodeRedirectUrl(request.getContextPath() + REDIRECT_URL));
+			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + REDIRECT_URL));
 		} else {
 			request.setAttribute("fouten", fouten);
 			request.getRequestDispatcher(VIEW).forward(request, response);
